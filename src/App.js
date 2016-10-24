@@ -21,6 +21,8 @@ class App extends Component {
       todoTitle: '',
       dataSource: ds.cloneWithRows(this.props.todos),
     };
+
+    this.addTodoPressed = this.addTodoPressed.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -77,13 +79,14 @@ class App extends Component {
           <TextInput
             value={this.state.todoTitle}
             onChangeText={(newTodoTitle) => { this.setState({ todoTitle: newTodoTitle }); }}
+            onSubmitEditing={this.addTodoPressed}
             style={styles.textinput}
             underlineColorAndroid="transparent"
             placeholder="Your next todo ..."
             autoFocus={false}
           />
           <TouchableHighlight
-            onPress={() => { this.addTodoPressed(); }}
+            onPress={this.addTodoPressed}
             activeOpacity={0.5}
             style={{ marginLeft: 5,borderRadius: 5, }}
             underlayColor="gray"
