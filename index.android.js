@@ -8,13 +8,21 @@ import {
   TouchableHighlight,
 } from 'react-native';
 
-import { createStore } from 'redux';
+import { createStore, compose, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import createLogger from 'redux-logger';
 import rootReducer from './src/reducers';
 import App from './src/App';
 
 function configureStore(initialState) {
-  return createStore(rootReducer, initialState);
+  // store enhancers
+  var enhancer = compose(
+    applyMiddleware(
+      createLogger()
+    )
+  );
+
+  return createStore(rootReducer, initialState, enhancer);
 }
 
 const store = configureStore({});

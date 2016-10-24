@@ -8,7 +8,6 @@ const initialState = [{
 }];
 
 function todos(state = initialState, action) {
-  console.log('Reducer called');
   return state;
 }
 
