@@ -1,9 +1,10 @@
 'use strict';
-import * as types from './types'
+import * as types from './types';
 
-export function addTodo(title) {
+export function addTodo({id, title}) {
   return {
     type: types.ADD_TODO,
+    id,
     title,
   };
 }

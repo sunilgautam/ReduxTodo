@@ -4,7 +4,9 @@ import {
   Text,
   TextInput,
   View,
+  Image,
   TouchableHighlight,
+  ListView,
 } from 'react-native';
 
 import { bindActionCreators } from 'redux';
@@ -12,25 +14,77 @@ import { connect } from 'react-redux';
 import * as ActionCreators from './actions';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    this.state = {
+      todoTitle: '',
+      dataSource: ds.cloneWithRows(this.props.todos),
+    };
+  }
+
+  addTodoPressed() {
+    const todo = {
+      id: Math.random().toString(36),
+      title: this.state.todoTitle,
+    };
+    // call action
+    this.props.actions.addTodo(todo);
+
+    // clear text input
+    this.setState({ todoTitle: '' });
+  }
+
+  renderRow(rowData) {
+    var icon = rowData.completed ? require('./img/complete-icon.png') : require('./img/incomplete-icon.png');
+    return (
+      <View style={styles.todoItem}>
+        <View style={styles.todoItemLeft}>
+          <Image source={icon} style={styles.todoItemStatus} />
+          <Text style={styles.todoItemTitle}>{rowData.title}</Text>
+        </View>
+        <View style={styles.todoItemRight}>
+          <Image source={require('./img/delete-icon.png')} style={styles.todoItemDelete} />
+        </View>
+      </View>
+    );
+  }
+
+  renderSeparator(sectionID, rowID, adjacentRowHighlighted) {
+    return (
+      <View
+        key={`${sectionID}-${rowID}`}
+        style={styles.separator}
+      />
+    );
+  }
+
   render() {
     return (
       <View style={[styles.container]}>
         <View style={styles.inputContainer}>
           <TextInput
+            value={this.state.todoTitle}
+            onChangeText={(newTodoTitle) => { this.setState({ todoTitle: newTodoTitle }); }}
             style={styles.textinput}
             underlineColorAndroid="transparent"
             placeholder="Your next todo ..."
             autoFocus={false}
           />
           <TouchableHighlight
-            onPress={() => {}}
+            onPress={() => { this.addTodoPressed(); }}
             activeOpacity={0.5}
+            style={{ marginLeft: 5,borderRadius: 5, }}
             underlayColor="gray"
           >
             <Text style={styles.button}>Add</Text>
           </TouchableHighlight>
         </View>
-        <Text>Content</Text>
+        <ListView
+          dataSource={this.state.dataSource}
+          renderRow={this.renderRow}
+          renderSeparator={this.renderSeparator}
+        />
       </View>
     );
   }
@@ -66,13 +120,42 @@ const styles = StyleSheet.create({
     backgroundColor: 'skyblue',
     borderRadius: 5,
     padding: 10,
-    marginLeft: 5,
+  },
+  separator: {
+    flex: 1,
+    height: StyleSheet.hairlineWidth,
+    backgroundColor: '#8E8E8E',
+  },
+  todoItem: {
+    padding: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  todoItemLeft:{
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  todoItemRight:{
+    alignItems: 'flex-end',
+    alignItems: 'center',
+  },
+  todoItemTitle: {
+    paddingLeft: 10,
+    fontSize: 18,
+    height: 30,
+  },
+  todoItemStatus: {
+
+  },
+  todoItemDelete: {
+
   },
 });
 
 function mapStateToProps(state) {
   return {
-
+    todos: state.todos,
   };
 }
 

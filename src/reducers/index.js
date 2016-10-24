@@ -1,13 +1,34 @@
 'use strict';
 import { combineReducers } from 'redux';
+import * as types from '../actions/types';
 
 const initialState = [{
-  text: 'Use Redux',
+  id: 1,
+  title: 'Wake up',
   completed: false,
-  id: 0
+}, {
+  id: 2,
+  title: 'Get ready',
+  completed: false,
 }];
 
 function todos(state = initialState, action) {
+  switch(action.type) {
+    case types.ADD_TODO:
+      return [
+        ...state,
+        {
+          id: action.id,
+          title: action.title,
+          completed: false,
+        }
+      ];
+    break;
+    default:
+      return state;
+    break;
+  }
+
   return state;
 }
 
