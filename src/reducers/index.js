@@ -16,12 +16,12 @@ function todos(state = initialState, action) {
   switch(action.type) {
     case types.ADD_TODO:
       return [
-        ...state,
         {
           id: action.id,
           title: action.title,
           completed: false,
-        }
+        },
+        ...state,
       ];
     break;
     default:

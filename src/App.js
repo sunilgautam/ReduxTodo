@@ -23,6 +23,12 @@ class App extends Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      dataSource: this.state.dataSource.cloneWithRows(nextProps.todos)
+    })
+  }
+
   addTodoPressed() {
     // check blank
     if (!this.state.todoTitle) {
