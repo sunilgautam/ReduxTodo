@@ -24,6 +24,11 @@ class App extends Component {
   }
 
   addTodoPressed() {
+    // check blank
+    if (!this.state.todoTitle) {
+      return;
+    }
+
     const todo = {
       id: Math.random().toString(36),
       title: this.state.todoTitle,
