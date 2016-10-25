@@ -4,9 +4,7 @@ import {
   Text,
   TextInput,
   View,
-  Image,
   TouchableHighlight,
-  ListView,
 } from 'react-native';
 import dismissKeyboard from 'react-native/Libraries/Utilities/dismissKeyboard'
 
@@ -14,24 +12,16 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as ActionCreators from './actions';
 
-import TodoRow from './components/TodoRow';
+import TodoList from './components/TodoList';
 
 class App extends Component {
   constructor(props) {
     super(props);
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
       todoTitle: '',
-      dataSource: ds.cloneWithRows(this.props.todos),
     };
 
     this.addTodoPressed = this.addTodoPressed.bind(this);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(nextProps.todos)
-    })
   }
 
   addTodoPressed() {
@@ -85,11 +75,7 @@ class App extends Component {
             <Text style={styles.button}>Add</Text>
           </TouchableHighlight>
         </View>
-        <ListView
-          dataSource={this.state.dataSource}
-          renderRow={(data) => <TodoRow {...data} />}
-          renderSeparator={this.renderSeparator}
-        />
+        <TodoList todos={this.props.todos} />
       </View>
     );
   }
@@ -125,11 +111,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'skyblue',
     borderRadius: 5,
     padding: 10,
-  },
-  separator: {
-    flex: 1,
-    height: StyleSheet.hairlineWidth,
-    backgroundColor: '#8E8E8E',
   },
 });
 
