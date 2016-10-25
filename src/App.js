@@ -14,6 +14,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as ActionCreators from './actions';
 
+import TodoRow from './components/TodoRow';
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -52,22 +54,6 @@ class App extends Component {
     dismissKeyboard();
   }
 
-  renderRow(rowData) {
-    var icon = rowData.completed ? require('./img/complete-icon.png') : require('./img/incomplete-icon.png');
-    var completedStyle = rowData.completed ? styles.todoItemTitleCompleted : null;
-    return (
-      <View style={styles.todoItem}>
-        <View style={styles.todoItemLeft}>
-          <Image source={icon} style={styles.todoItemStatus} />
-          <Text style={[styles.todoItemTitle, completedStyle]}>{rowData.title}</Text>
-        </View>
-        <View style={styles.todoItemRight}>
-          <Image source={require('./img/delete-icon.png')} style={styles.todoItemDelete} />
-        </View>
-      </View>
-    );
-  }
-
   renderSeparator(sectionID, rowID, adjacentRowHighlighted) {
     return (
       <View
@@ -101,7 +87,7 @@ class App extends Component {
         </View>
         <ListView
           dataSource={this.state.dataSource}
-          renderRow={this.renderRow}
+          renderRow={(data) => <TodoRow {...data} />}
           renderSeparator={this.renderSeparator}
         />
       </View>
@@ -144,34 +130,6 @@ const styles = StyleSheet.create({
     flex: 1,
     height: StyleSheet.hairlineWidth,
     backgroundColor: '#8E8E8E',
-  },
-  todoItem: {
-    padding: 12,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  todoItemLeft:{
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  todoItemRight:{
-    alignItems: 'flex-end',
-    alignItems: 'center',
-  },
-  todoItemTitle: {
-    paddingLeft: 10,
-    fontSize: 18,
-    height: 30,
-  },
-  todoItemTitleCompleted: {
-    textDecorationLine: 'line-through',
-  },
-  todoItemStatus: {
-
-  },
-  todoItemDelete: {
-
   },
 });
 
