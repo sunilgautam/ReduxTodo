@@ -3,11 +3,11 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   View,
-  Text,
   TextInput,
-  TouchableHighlight,
 } from 'react-native';
 import dismissKeyboard from 'react-native/Libraries/Utilities/dismissKeyboard';
+
+import Button from './Button';
 
 class InputSection extends Component {
   constructor(props) {
@@ -51,14 +51,7 @@ class InputSection extends Component {
           placeholder="Your next todo ..."
           autoFocus={false}
         />
-        <TouchableHighlight
-          onPress={this.addTodoPressed}
-          activeOpacity={0.5}
-          style={{ marginLeft: 5,borderRadius: 5, }}
-          underlayColor="gray"
-        >
-          <Text style={styles.button}>Add</Text>
-        </TouchableHighlight>
+        <Button onPress={this.addTodoPressed} />
       </View>
     );
   }
@@ -82,11 +75,6 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     fontSize: 16,
     flex: 1,
-  },
-  button: {
-    backgroundColor: 'skyblue',
-    borderRadius: 5,
-    padding: 10,
   },
 });
 
