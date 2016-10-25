@@ -50,11 +50,12 @@ class App extends Component {
 
   renderRow(rowData) {
     var icon = rowData.completed ? require('./img/complete-icon.png') : require('./img/incomplete-icon.png');
+    var completedStyle = rowData.completed ? styles.todoItemTitleCompleted : null;
     return (
       <View style={styles.todoItem}>
         <View style={styles.todoItemLeft}>
           <Image source={icon} style={styles.todoItemStatus} />
-          <Text style={styles.todoItemTitle}>{rowData.title}</Text>
+          <Text style={[styles.todoItemTitle, completedStyle]}>{rowData.title}</Text>
         </View>
         <View style={styles.todoItemRight}>
           <Image source={require('./img/delete-icon.png')} style={styles.todoItemDelete} />
@@ -158,6 +159,9 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     fontSize: 18,
     height: 30,
+  },
+  todoItemTitleCompleted: {
+    textDecorationLine: 'line-through',
   },
   todoItemStatus: {
 

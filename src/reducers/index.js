@@ -5,7 +5,7 @@ import * as types from '../actions/types';
 const initialState = [{
   id: 1,
   title: 'Wake up',
-  completed: false,
+  completed: true,
 }, {
   id: 2,
   title: 'Get ready',
