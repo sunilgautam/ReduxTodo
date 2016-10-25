@@ -8,6 +8,7 @@ import {
   TouchableHighlight,
   ListView,
 } from 'react-native';
+import dismissKeyboard from 'react-native/Libraries/Utilities/dismissKeyboard'
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -46,6 +47,9 @@ class App extends Component {
 
     // clear text input
     this.setState({ todoTitle: '' });
+
+    // dismiss keyboard
+    dismissKeyboard();
   }
 
   renderRow(rowData) {
