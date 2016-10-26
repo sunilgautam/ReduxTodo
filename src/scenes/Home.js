@@ -16,8 +16,11 @@ class Home extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <InputSection {...this.props} />
-        <TodoList {...this.props} />
+        <InputSection
+          ref="inputSection"
+          {...this.props}
+        />
+        <TodoList {...this.props} onEmptyClick={() => {this.refs.inputSection.setFocusToInput()}} />
       </View>
     );
   }

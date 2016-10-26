@@ -4,6 +4,7 @@ import {
   View,
   ListView,
   StyleSheet,
+  Text,
 } from 'react-native';
 
 import TodoRow from './TodoRow';
@@ -46,11 +47,23 @@ class TodoList extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <ListView
-          dataSource={this.state.dataSource}
-          renderRow={(data) => <TodoRow {...data} onToggleClick={this.onToggleClick} onDeleteClick={this.onDeleteClick} />}
-          renderSeparator={this.renderSeparator}
-        />
+        {this.props.todos.length > 0 &&
+          <ListView
+            dataSource={this.state.dataSource}
+            renderRow={(data) => <TodoRow {...data} onToggleClick={this.onToggleClick} onDeleteClick={this.onDeleteClick} />}
+            renderSeparator={this.renderSeparator}
+          />
+        }
+        {this.props.todos.length === 0 &&
+          <View style={styles.emptyContainer}>
+            <Text
+              style={styles.emptyText}
+              onPress={this.props.onEmptyClick}
+            >
+              Add your next {'\n'} todo
+            </Text>
+          </View>
+        }
       </View>
     );
   }
@@ -63,6 +76,17 @@ const styles = StyleSheet.create({
     flex: 1,
     height: StyleSheet.hairlineWidth,
     backgroundColor: '#8E8E8E',
+  },
+  emptyContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  emptyText: {
+    fontSize: 32,
+    fontWeight: 'normal',
+    textAlign: 'center',
   },
 });
 

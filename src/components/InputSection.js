@@ -19,6 +19,10 @@ class InputSection extends Component {
     this.addTodoPressed = this.addTodoPressed.bind(this);
   }
 
+  setFocusToInput() {
+    this.refs.txtInput.focus();
+  }
+
   addTodoPressed() {
     // check blank
     if (!this.state.todoTitle) {
@@ -43,6 +47,7 @@ class InputSection extends Component {
     return (
       <View style={styles.container}>
         <TextInput
+          ref="txtInput"
           value={this.state.todoTitle}
           onChangeText={(newTodoTitle) => { this.setState({ todoTitle: newTodoTitle }); }}
           onSubmitEditing={this.addTodoPressed}
