@@ -2,15 +2,7 @@
 import { combineReducers } from 'redux';
 import * as types from '../actions/types';
 
-const initialState = [{
-  id: 1,
-  title: 'Wake up',
-  completed: true,
-}, {
-  id: 2,
-  title: 'Get ready',
-  completed: false,
-}];
+const initialState = [];
 
 function todos(state = initialState, action) {
   switch(action.type) {
