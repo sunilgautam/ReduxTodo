@@ -14,6 +14,7 @@ const initialState = [{
 
 function todos(state = initialState, action) {
   switch(action.type) {
+
     case types.ADD_TODO:
       return [
         {
@@ -24,6 +25,30 @@ function todos(state = initialState, action) {
         ...state,
       ];
     break;
+
+    case types.TOGGLE_TODO:
+      const index = state.findIndex((todo) => {
+        return todo.id === action.id;
+      });
+
+      return [
+        ...state.slice(0, index),
+        Object.assign({}, state[index], { completed: !state[index].completed }),
+        ...state.slice(index + 1)
+      ];
+    break;
+
+    case types.REMOVE_TODO:
+      const delIndex = state.findIndex((todo) => {
+        return todo.id === action.id;
+      });
+
+      return [
+        ...state.slice(0, delIndex),
+        ...state.slice(delIndex + 1)
+      ];
+    break;
+
     default:
       return state;
     break;

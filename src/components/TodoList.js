@@ -15,6 +15,9 @@ class TodoList extends Component {
     this.state = {
       dataSource: ds.cloneWithRows(this.props.todos),
     };
+
+    this.onToggleClick = this.onToggleClick.bind(this);
+    this.onDeleteClick = this.onDeleteClick.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -32,12 +35,20 @@ class TodoList extends Component {
     );
   }
 
+  onToggleClick(id) {
+    this.props.actions.toggleTodo(id);
+  }
+
+  onDeleteClick(id) {
+    this.props.actions.removeTodo(id);
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <ListView
           dataSource={this.state.dataSource}
-          renderRow={(data) => <TodoRow {...data} />}
+          renderRow={(data) => <TodoRow {...data} onToggleClick={this.onToggleClick} onDeleteClick={this.onDeleteClick} />}
           renderSeparator={this.renderSeparator}
         />
       </View>

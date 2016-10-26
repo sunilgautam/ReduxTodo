@@ -17,7 +17,7 @@ class Home extends Component {
     return (
       <View style={styles.container}>
         <InputSection {...this.props} />
-        <TodoList todos={this.props.todos} />
+        <TodoList {...this.props} />
       </View>
     );
   }
